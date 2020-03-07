@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8095974251872100757}
   - component: {fileID: 8095974251872100763}
+  - component: {fileID: 2879120602352266415}
   - component: {fileID: 8095974251872100756}
   - component: {fileID: 8095974251872100762}
   - component: {fileID: 8095974251872100760}
@@ -49,6 +50,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorTransform: {fileID: 2456508207409003887}
+  animator: {fileID: 2456508207172477516}
+--- !u!114 &2879120602352266415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8095974251872100759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f53886b56b1b17d418502108a471f8f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  proximityRange: 0.01
 --- !u!136 &8095974251872100756
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -73,10 +88,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.9
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 5
+  m_Acceleration: 16
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 180
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -249,6 +264,12 @@ PrefabInstance:
 --- !u!4 &2456508207409003773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5930651934574693639, guid: 7bf201eb93a64ab47857ce81b796a258,
+    type: 3}
+  m_PrefabInstance: {fileID: 8095974252194247162}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2456508207172477516 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5930651934207234998, guid: 7bf201eb93a64ab47857ce81b796a258,
     type: 3}
   m_PrefabInstance: {fileID: 8095974252194247162}
   m_PrefabAsset: {fileID: 0}

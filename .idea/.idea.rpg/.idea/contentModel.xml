@@ -12,16 +12,19 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="AnimationSystem.cs" t="Include" />
           <e p="CameraMovement.cs" t="Include" />
           <e p="CharacterPortrait.cs" t="Include" />
           <e p="GameObjectPool.cs" t="Include" />
           <e p="MouseController.cs" t="Include" />
+          <e p="Movement.cs" t="Include" />
           <e p="PathVisualization.cs" t="Include" />
           <e p="SelectionController.cs" t="Include" />
           <e p="system" t="Include">
             <e p="MonoSingleton.cs" t="Include" />
             <e p="PlayerInputControl.cs" t="Include" />
           </e>
+          <e p="UIController.cs" t="Include" />
           <e p="Units" t="Include">
             <e p="Unit.cs" t="Include" />
             <e p="UnitSelection.cs" t="Include" />

@@ -12,10 +12,11 @@ public class PathVisualization : MonoBehaviour
 
     private NavMeshAgent unitNavAgent;
     private Vector3 unitFloorPosition;
-    private bool showPath;
     private LayerMask terrainMask;
     private GameObjectPool pathDotsPool;
     private List<GameObject> usedDots = new List<GameObject>();
+    private bool showPath;
+    private bool mouseOverUI;
 
     private void Awake()
     {
@@ -27,8 +28,12 @@ public class PathVisualization : MonoBehaviour
     {
         SelectionController.Instance.OnUnitSelected += UnitSelectedHandler;
         SelectionController.Instance.OnUnitUnselect += UnitUnSelectedHandler;
+        UIController.Instance.OnMouseEnterUI += MouseEnterUIHandler;
+        UIController.Instance.OnMouseExitUI += MouseExitUIHandler;
     }
 
+    // IMPROVE: Calculate path only on actual mouse movement.
+    // IMPROVE: Redraw only new parts of path.
     private void Update()
     {
         if (showPath == false ||
@@ -73,15 +78,14 @@ public class PathVisualization : MonoBehaviour
     {
         unitNavAgent = unit.GetComponent<NavMeshAgent>();
         unitFloorPosition = unit.FloorTransform.position;
-        showPath = true;
+        RecalculateShowPath();
     }
 
     private void UnitUnSelectedHandler()
     {
         unitNavAgent = null;
         unitFloorPosition = Vector3.zero;
-        showPath = false;
-        ClearDrawnPath();
+        RecalculateShowPath();
     }
 
     private void ClearDrawnPath()
@@ -89,5 +93,24 @@ public class PathVisualization : MonoBehaviour
         if (usedDots.Count == 0) return;
         pathDotsPool.ReleaseObjects(usedDots);
         usedDots.Clear();
+    }
+
+    private void MouseExitUIHandler()
+    {
+        mouseOverUI = false;
+        RecalculateShowPath();
+    }
+
+    private void MouseEnterUIHandler()
+    {
+        mouseOverUI = true;
+        RecalculateShowPath();
+    }
+
+    private void RecalculateShowPath()
+    {
+        showPath = unitNavAgent != null && unitFloorPosition != null && mouseOverUI == false;
+        if (showPath == false)
+            ClearDrawnPath();
     }
 }

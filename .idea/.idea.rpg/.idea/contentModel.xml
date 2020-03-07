@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Stas\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Stas\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_rpg.-1133199698.00" t="ExcludeRecursive" />
+    <e p="D:\projects\rpg" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="ImportedAssets" t="Include">
+          <e p="Fantasy Chess RPG Character - Arthur" t="Include">
+            <e p="readme.txt" t="Include" />
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="CameraMovement.cs" t="Include" />
+          <e p="CharacterPortrait.cs" t="Include" />
+          <e p="GameObjectPool.cs" t="Include" />
+          <e p="MouseController.cs" t="Include" />
+          <e p="PathVisualization.cs" t="Include" />
+          <e p="SelectionController.cs" t="Include" />
+          <e p="system" t="Include">
+            <e p="MonoSingleton.cs" t="Include" />
+            <e p="PlayerInputControl.cs" t="Include" />
+          </e>
+          <e p="Units" t="Include">
+            <e p="Unit.cs" t="Include" />
+            <e p="UnitSelection.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="rpg.sln" t="IncludeFlat" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>

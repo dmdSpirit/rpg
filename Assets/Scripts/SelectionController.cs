@@ -1,37 +1,28 @@
-﻿using ThisIsThePresident;
-using UnityEngine;
+﻿using System;
 
 public class SelectionController : MonoSingleton<SelectionController>
 {
-    public enum SelectionType
-    {
-        Undefined,
-        UnitSelect,
-    }
+    public event Action<Unit> OnUnitSelected;
+    public event Action OnUnitUnselect;
 
-    public bool isSomethingSelected { get; protected set; } = false;
-    public Unit selectedUnit { get; protected set; } = null;
-    public SelectionType selectionType { get; protected set; } = SelectionType.Undefined;
+    public Unit SelectedUnit { get; private set; } = null;
+    public bool IsSomethingSelected => SelectedUnit != null;
 
     public void Select(Unit unit)
     {
-        if (unit == null || (isSomethingSelected && selectionType == SelectionType.UnitSelect && selectedUnit == unit))
+        if (unit == null || (IsSomethingSelected && SelectedUnit == unit))
             return;
-        if (isSomethingSelected)
+        if (IsSomethingSelected)
             UnSelectPrevious();
-        selectedUnit = unit;
-        selectedUnit.Select();
-        selectionType = SelectionType.UnitSelect;
-        isSomethingSelected = true;
+        SelectedUnit = unit;
+        SelectedUnit.Select();
+        OnUnitSelected?.Invoke(unit);
     }
 
     private void UnSelectPrevious()
     {
-        if (selectionType == SelectionType.UnitSelect)
-        {
-            selectedUnit.UnSelect();
-            isSomethingSelected = false;
-            return;
-        }
+        if (IsSomethingSelected == false) return;
+        SelectedUnit.UnSelect();
+        OnUnitUnselect?.Invoke();
     }
 }

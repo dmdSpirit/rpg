@@ -4,10 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(UnitSelection))]
 public class Unit : MonoBehaviour
 {
-    [SerializeField] private Transform floorTransform;
+    [SerializeField] private Transform floorTransform = default;
 
     public Transform FloorTransform => floorTransform;
-    
+
     private UnitSelection selection;
 
     private void Awake()

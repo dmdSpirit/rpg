@@ -17,11 +17,12 @@ public class CameraMovement : MonoBehaviour
     {
         if (movementDirection != Vector2.zero)
         {
-            var movement = new Vector3(movementDirection.x * cameraSpeed * Time.fixedTime, 0, movementDirection.y * cameraSpeed * Time.fixedTime);
+            var movement = new Vector3(movementDirection.x * cameraSpeed * Time.fixedTime, 0,
+                movementDirection.y * cameraSpeed * Time.fixedTime);
             transform.Translate(movement);
         }
     }
 
-    private void OnEnable() => playerInput.Enable();
-    private void OnDisable() => playerInput.Disable();
+    private void OnEnable() => playerInput?.Enable();
+    private void OnDisable() => playerInput?.Disable();
 }

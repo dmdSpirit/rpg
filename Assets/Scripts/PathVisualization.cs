@@ -50,7 +50,7 @@ public class PathVisualization : MonoBehaviour
     private void DrawPath(NavMeshPath path)
     {
         ClearDrawnPath();
-        bool firstCorner = true;
+        var firstCorner = true;
         for (var i = 1; i < path.corners.Length; ++i)
         {
             var firstPoint = path.corners[i - 1];

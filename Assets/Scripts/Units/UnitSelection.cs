@@ -25,4 +25,11 @@ public class UnitSelection : MonoBehaviour
         if (selectionCircle != null)
             selectionCircle.SetActive(false);
     }
+
+    public void Initialize(GameObject selectionCircle)
+    {
+        this.selectionCircle = selectionCircle;
+        if (selectionCircle != null)
+            selectionCircle.SetActive(false);
+    }
 }

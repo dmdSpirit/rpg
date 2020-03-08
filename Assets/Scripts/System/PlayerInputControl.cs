@@ -33,6 +33,14 @@ public class @PlayerInputControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Right Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""32d4c4b4-ffdd-45d0-a7e9-09402ba1b8d3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -99,6 +107,17 @@ public class @PlayerInputControl : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f07eebf5-5fcf-4764-9017-bf4105d27cd2"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -675,6 +694,7 @@ public class @PlayerInputControl : IInputActionCollection, IDisposable
         m_Fight = asset.FindActionMap("Fight", throwIfNotFound: true);
         m_Fight_MoveCamera = m_Fight.FindAction("Move Camera", throwIfNotFound: true);
         m_Fight_Select = m_Fight.FindAction("Select", throwIfNotFound: true);
+        m_Fight_RightClick = m_Fight.FindAction("Right Click", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -739,12 +759,14 @@ public class @PlayerInputControl : IInputActionCollection, IDisposable
     private IFightActions m_FightActionsCallbackInterface;
     private readonly InputAction m_Fight_MoveCamera;
     private readonly InputAction m_Fight_Select;
+    private readonly InputAction m_Fight_RightClick;
     public struct FightActions
     {
         private @PlayerInputControl m_Wrapper;
         public FightActions(@PlayerInputControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveCamera => m_Wrapper.m_Fight_MoveCamera;
         public InputAction @Select => m_Wrapper.m_Fight_Select;
+        public InputAction @RightClick => m_Wrapper.m_Fight_RightClick;
         public InputActionMap Get() { return m_Wrapper.m_Fight; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -760,6 +782,9 @@ public class @PlayerInputControl : IInputActionCollection, IDisposable
                 @Select.started -= m_Wrapper.m_FightActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_FightActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_FightActionsCallbackInterface.OnSelect;
+                @RightClick.started -= m_Wrapper.m_FightActionsCallbackInterface.OnRightClick;
+                @RightClick.performed -= m_Wrapper.m_FightActionsCallbackInterface.OnRightClick;
+                @RightClick.canceled -= m_Wrapper.m_FightActionsCallbackInterface.OnRightClick;
             }
             m_Wrapper.m_FightActionsCallbackInterface = instance;
             if (instance != null)
@@ -770,6 +795,9 @@ public class @PlayerInputControl : IInputActionCollection, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
+                @RightClick.started += instance.OnRightClick;
+                @RightClick.performed += instance.OnRightClick;
+                @RightClick.canceled += instance.OnRightClick;
             }
         }
     }
@@ -936,6 +964,7 @@ public class @PlayerInputControl : IInputActionCollection, IDisposable
     {
         void OnMoveCamera(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
+        void OnRightClick(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

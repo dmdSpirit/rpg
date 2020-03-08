@@ -1,11 +1,13 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CharacterPortrait : MonoBehaviour
+public class CharacterPortrait : UIPanel
 {
+    public event Action<CharacterPortrait> OnPortraitCleared;
+
     [SerializeField] private Unit unit = default;
+    [SerializeField] private Image image = default;
 
     private Button button;
     private Image portraitBorder;
@@ -20,14 +22,25 @@ public class CharacterPortrait : MonoBehaviour
         button.onClick.AddListener(SelectUnit);
     }
 
-    private void Start()
+    public void ShowPanel(Unit unit)
     {
-        if (unit != null)
-        {
-            var selection = unit.GetComponent<UnitSelection>();
-            if (selection != null)
-                selection.OnSelectionChanged += OnSelectedChangedHandler;
-        }
+        gameObject.SetActive(true);
+        this.unit = unit;
+        image.sprite = unit.UnitPortraitImage;
+        var selection = unit.GetComponent<UnitSelection>();
+        if (selection != null)
+            selection.OnSelectionChanged += OnSelectedChangedHandler;
+        OnSelectedChangedHandler(false);
+        base.ShowPanel();
+    }
+
+    public void ClearPortrait()
+    {
+        var selection = unit.GetComponent<UnitSelection>();
+        if (selection != null)
+            selection.OnSelectionChanged -= OnSelectedChangedHandler;
+        unit = null;
+        OnPortraitCleared?.Invoke(this);
     }
 
     private void OnSelectedChangedHandler(bool isSelected)

@@ -36,6 +36,8 @@
           <e p="PathVisualization.cs" t="Include" />
           <e p="PlayerUnit.cs" t="Include" />
           <e p="SelectionController.cs" t="Include" />
+          <e p="Skill.cs" t="Include" />
+          <e p="SkillButton.cs" t="Include" />
           <e p="system" t="Include">
             <e p="MonoSingleton.cs" t="Include" />
             <e p="PlayerInputControl.cs" t="Include" />

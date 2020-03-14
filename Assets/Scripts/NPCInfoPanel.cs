@@ -30,6 +30,6 @@ public class NPCInfoPanel : UIPanel
         intelligence.SetText(stats.intelligence.ToString());
         constitution.SetText(stats.constitution.ToString());
         memory.SetText(stats.memory.ToString());
-        wisdom.SetText(stats.wisdom.ToString());
+        wisdom.SetText(stats.wits.ToString());
     }
 }

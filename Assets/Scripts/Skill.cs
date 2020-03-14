@@ -9,7 +9,7 @@ public enum SkillType
 
 public class Skill : ScriptableObject
 {
-    public string name;
+    public new string name;
     public SkillType type;
     public Sprite image;
     public string description;

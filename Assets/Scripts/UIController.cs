@@ -7,17 +7,17 @@ public class UIController : MonoSingleton<UIController>, IPointerEnterHandler, I
     public event Action OnMouseEnterUI;
     public event Action OnMouseExitUI;
 
-    [SerializeField] private NPCInfoPanel npcInfoPanel;
+    [SerializeField] private NPCInfoPanel npcInfoPanel = default;
+    [SerializeField] private InitiativePanel initiativePanel = default;
 
     private void Start()
     {
         npcInfoPanel.HidePanel();
+        initiativePanel.HidePanel();
     }
 
-    public void ShowNPCInfoPanel(Unit unit)
-    {
-        npcInfoPanel.ShowPanel(unit);
-    }
+    public void ShowInitiativePanel(InitiativeOrder initiativeOrder) => initiativePanel.ShowPanel(initiativeOrder);
+    public void ShowNPCInfoPanel(Unit unit) => npcInfoPanel.ShowPanel(unit);
 
     public void OnPointerEnter(PointerEventData eventData)
     {

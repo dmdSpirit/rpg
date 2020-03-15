@@ -13,9 +13,10 @@ public enum UnitMaster
 public class Unit : MonoBehaviour
 {
     public event Action<Unit> OnUnitDestroyed;
-    public event Action OnHPChanged;
-    public event Action OnPhysicalArmorChanged;
-    public event Action OnMagicalArmorChanged;
+
+    // IMPROVE: Can store updated stats list and then call event once a frame.
+    public event Action OnStatsUpdated;
+
 
     [SerializeField] private Transform floorTransform = default;
     [SerializeField] private Animator animator = default;
@@ -27,6 +28,7 @@ public class Unit : MonoBehaviour
     public int MaxHP => stats.hp;
     public int MaxPhysicalArmor => stats.physicalArmor;
     public int MaxMagicArmor => stats.magicalArmor;
+    public int MaxSourcePoints => stats.sourcePoints;
 
     public int HP
     {
@@ -35,7 +37,7 @@ public class Unit : MonoBehaviour
         {
             if (value == hp) return;
             hp = value;
-            OnHPChanged?.Invoke();
+            OnStatsUpdated?.Invoke();
             if (hp <= 0)
                 Die();
         }
@@ -53,9 +55,10 @@ public class Unit : MonoBehaviour
                 magicalArmor = 0;
             }
             else
+            {
                 magicalArmor = value;
-
-            OnMagicalArmorChanged?.Invoke();
+                OnStatsUpdated?.Invoke();
+            }
         }
     }
 
@@ -71,9 +74,34 @@ public class Unit : MonoBehaviour
                 physicalArmor = 0;
             }
             else
+            {
                 physicalArmor = value;
+                OnStatsUpdated?.Invoke();
+            }
+        }
+    }
 
-            OnPhysicalArmorChanged?.Invoke();
+    public int ActionPoints
+    {
+        get => actionPoints;
+        set
+        {
+            var points = Mathf.Clamp(value, 0, GameHandler.MaxActionPoints);
+            if (points == actionPoints) return;
+            actionPoints = points;
+            OnStatsUpdated?.Invoke();
+        }
+    }
+
+    public int SourcePoints
+    {
+        get => sourcePoints;
+        set
+        {
+            var points = Mathf.Clamp(value, 0, MaxSourcePoints);
+            if (points == sourcePoints) return;
+            sourcePoints = points;
+            OnStatsUpdated?.Invoke();
         }
     }
 
@@ -92,6 +120,8 @@ public class Unit : MonoBehaviour
     private int hp;
     private int physicalArmor;
     private int magicalArmor;
+    private int actionPoints;
+    private int sourcePoints;
 
     private void Awake()
     {

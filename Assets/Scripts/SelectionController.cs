@@ -3,7 +3,7 @@
 public class SelectionController : MonoSingleton<SelectionController>
 {
     public event Action<Unit> OnUnitSelected;
-    public event Action OnUnitUnselect;
+    public event Action<Unit> OnUnitUnselect;
 
     public Unit SelectedUnit { get; private set; } = null;
     public bool IsSomethingSelected => SelectedUnit != null;
@@ -29,6 +29,7 @@ public class SelectionController : MonoSingleton<SelectionController>
     {
         if (IsSomethingSelected == false) return;
         SelectedUnit.UnSelect();
-        OnUnitUnselect?.Invoke();
+        OnUnitUnselect?.Invoke(SelectedUnit);
+        SelectedUnit = null;
     }
 }

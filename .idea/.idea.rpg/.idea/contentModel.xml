@@ -29,6 +29,7 @@
           <e p="CharacterPortrait.cs" t="Include" />
           <e p="CharacterStats.cs" t="Include" />
           <e p="CombatController.cs" t="Include" />
+          <e p="GameHandler.cs" t="Include" />
           <e p="GameObjectPool.cs" t="Include" />
           <e p="InitiativeOrder.cs" t="Include" />
           <e p="InitiativePanel.cs" t="Include" />
@@ -39,6 +40,7 @@
           <e p="PartyManager.cs" t="Include" />
           <e p="PathVisualization.cs" t="Include" />
           <e p="PlayerUnit.cs" t="Include" />
+          <e p="SelectedUnitBarsPanel.cs" t="Include" />
           <e p="SelectionController.cs" t="Include" />
           <e p="Skill.cs" t="Include" />
           <e p="SkillButton.cs" t="Include" />

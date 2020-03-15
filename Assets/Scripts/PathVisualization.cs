@@ -81,7 +81,7 @@ public class PathVisualization : MonoBehaviour
         RecalculateShowPath();
     }
 
-    private void UnitUnSelectedHandler()
+    private void UnitUnSelectedHandler(Unit unit)
     {
         unitNavAgent = null;
         unitFloorPosition = Vector3.zero;

@@ -14,5 +14,18 @@ public class CombatController : MonoBehaviour
         unitsInCombat = UnitManager.Instance.AllUnits;
         initiativeOrder = new InitiativeOrder(unitsInCombat);
         UIController.Instance.ShowInitiativePanel(initiativeOrder);
+        SelectionController.Instance.OnUnitSelected += UnitSelectedHandler;
+        SelectionController.Instance.OnUnitUnselect += UnitUnSelectedHandler;
+        SelectionController.Instance.Select(initiativeOrder.ActiveUnit);
+    }
+
+    private void UnitSelectedHandler(Unit unit)
+    {
+        UIController.Instance.ShowSelectedUnitBarsPanel(unit);
+    }
+
+    private void UnitUnSelectedHandler(Unit unit)
+    {
+        UIController.Instance.HideSelectedUnitBarsPanel(unit);
     }
 }

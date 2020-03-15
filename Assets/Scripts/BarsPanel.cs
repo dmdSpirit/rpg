@@ -12,9 +12,7 @@ public class BarsPanel : UIPanel
     public void ShowPanel(Unit unit)
     {
         this.unit = unit;
-        unit.OnHPChanged += UpdateBars;
-        unit.OnMagicalArmorChanged += UpdateBars;
-        unit.OnPhysicalArmorChanged += UpdateBars;
+        unit.OnStatsUpdated += UpdateBars;
         UpdateBars();
         base.ShowPanel();
     }
@@ -22,9 +20,7 @@ public class BarsPanel : UIPanel
     public override void HidePanel()
     {
         if (unit == null) return;
-        unit.OnHPChanged -= UpdateBars;
-        unit.OnMagicalArmorChanged -= UpdateBars;
-        unit.OnPhysicalArmorChanged -= UpdateBars;
+        unit.OnStatsUpdated -= UpdateBars;
         unit = null;
         base.HidePanel();
     }

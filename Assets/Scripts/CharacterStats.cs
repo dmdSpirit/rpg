@@ -14,4 +14,5 @@ public class CharacterStats
     public int hp;
     public int physicalArmor;
     public int magicalArmor;
+    public int sourcePoints;
 }

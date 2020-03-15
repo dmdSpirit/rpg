@@ -22,6 +22,7 @@
       <Path>Temp</Path>
       <Path>UIElementsSchema</Path>
       <Path>obj</Path>
+      <Path>screenshots</Path>
     </explicitExcludes>
   </component>
 </project>

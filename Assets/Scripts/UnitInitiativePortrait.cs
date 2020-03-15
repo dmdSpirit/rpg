@@ -16,7 +16,7 @@ public class UnitInitiativePortrait : UIPanel, IPointerEnterHandler, IPointerExi
 
     private Image backgroundImage;
     private Color baseColor;
-    private bool isHighlighted;
+    // private bool isHighlighted;
 
     private void Awake()
     {
@@ -57,13 +57,13 @@ public class UnitInitiativePortrait : UIPanel, IPointerEnterHandler, IPointerExi
 
     public void HighlightPortrait()
     {
-        isHighlighted = true;
+        // isHighlighted = true;
         backgroundImage.color = highlightedColor;
     }
 
     public void UnHighlightPortrait()
     {
-        isHighlighted = false;
+        // isHighlighted = false;
         backgroundImage.color = baseColor;
     }
 }

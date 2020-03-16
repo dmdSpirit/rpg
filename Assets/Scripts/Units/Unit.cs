@@ -111,6 +111,8 @@ public class Unit : MonoBehaviour
     public CharacterStats Stats => stats;
     public int Initiative => Mathf.Max(stats.wits, 10);
 
+    public int Level { get; protected set; } = 1;
+
     private UnitSelection selection;
     private Movement movement;
 

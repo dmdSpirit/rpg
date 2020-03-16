@@ -17,8 +17,8 @@ public class SelectedUnitBarsPanel : UIPanel
 
     private void Awake()
     {
-        if (actionPoints.Length != GameHandler.MaxActionPoints)
-            Debug.LogError($"Should be {GameHandler.MaxActionPoints} action points on panel.", gameObject);
+        if (actionPoints.Length != GameHandler.Instance.maxActionPoints)
+            Debug.LogError($"Should be {GameHandler.Instance.maxActionPoints} action points on panel.", gameObject);
         sourcePointsColor = sourcePoints[0].color;
         actionPointColor = actionPoints[0].color;
     }

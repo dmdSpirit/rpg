@@ -2,5 +2,11 @@
 
 public class GameHandler : MonoSingleton<GameHandler>
 {
-    public static int MaxActionPoints => 6;
+    public int maxActionPoints = 6;
+
+    public Color actionPointsColor;
+    public Color usedActionPointsColor;
+
+    public Color sourcePointsColor;
+    public Color usedSourcePointsColor;
 }

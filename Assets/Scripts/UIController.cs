@@ -11,7 +11,8 @@ public class UIController : MonoSingleton<UIController>, IPointerEnterHandler, I
 
     [SerializeField] private NPCInfoPanel npcInfoPanel = default;
     [SerializeField] private InitiativePanel initiativePanel = default;
-    [SerializeField] private SelectedUnitBarsPanel selectedUnitBarsPanel = default;
+    [SerializeField] private UnitStatsPanel selectedUnitBarsPanel = default;
+    [SerializeField] private UnitStatsPanel hoveredUnitBarsPanel = default;
 
     private List<UIPanel> shownPanels = new List<UIPanel>();
 
@@ -20,6 +21,7 @@ public class UIController : MonoSingleton<UIController>, IPointerEnterHandler, I
         RegisterPanel(npcInfoPanel);
         RegisterPanel(initiativePanel);
         RegisterPanel(selectedUnitBarsPanel);
+        RegisterPanel(hoveredUnitBarsPanel);
     }
 
     public void ShowInitiativePanel(InitiativeOrder initiativeOrder)
@@ -44,6 +46,9 @@ public class UIController : MonoSingleton<UIController>, IPointerEnterHandler, I
     {
         selectedUnitBarsPanel.HidePanel();
     }
+
+    public void ShowHoveredUnitBarsPanel(Unit unit) => hoveredUnitBarsPanel.ShowPanel(unit);
+    public void HideHoveredUnitBarsPanel() => hoveredUnitBarsPanel.HidePanel();
 
     public void HideAllPanels()
     {

@@ -9,6 +9,8 @@ public class MouseController : MonoSingleton<MouseController>
     private bool inputIsBlocked;
     private bool raycastIsBlocked;
 
+    private Unit hoveredUnit;
+
     private void Awake()
     {
         playerInput = new PlayerInputControl();
@@ -18,6 +20,24 @@ public class MouseController : MonoSingleton<MouseController>
         AnimationSystem.Instance.OnBlockingAnimationStateChange += BlockingAnimationStateChangeHandler;
         UIController.Instance.OnMouseEnterUI += MouseEnterUIHandler;
         UIController.Instance.OnMouseExitUI += MouseExitUIHandler;
+    }
+
+    // IMPROVE: use new input system callback on mouse move OR on camera move.
+    private void Update()
+    {
+        if (TryGetPointedObject(out RaycastHit hit))
+        {
+            var unit = hit.collider.GetComponent<Unit>();
+            if (unit != null)
+            {
+                hoveredUnit = unit;
+                UIController.Instance.ShowHoveredUnitBarsPanel(unit);
+                return;
+            }
+        }
+
+        UIController.Instance.HideHoveredUnitBarsPanel();
+        hoveredUnit = null;
     }
 
 

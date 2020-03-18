@@ -138,6 +138,7 @@ public class Unit : MonoBehaviour
         HP = MaxHP;
         MagicalArmor = MaxMagicArmor;
         PhysicalArmor = MaxPhysicalArmor;
+        SourcePoints = MaxSourcePoints;
         UnitManager.Instance.SubscribeUnit(this);
     }
 

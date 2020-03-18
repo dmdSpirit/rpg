@@ -17,40 +17,77 @@ public class UnitStatsPanel : UIPanel
         SourcePoints,
     }
 
-    [SerializeField] private Image portrait;
+    [SerializeField] private Image portrait = default;
 
-    [Header("Bars")] [SerializeField] private Image hpBar;
-    [SerializeField] private Image physicalArmorBar;
-    [SerializeField] private Image magicalArmorBar;
+    [Header("Bars")] [SerializeField] private Image hpBar = default;
+    [SerializeField] private Image physicalArmorBar = default;
+    [SerializeField] private Image magicalArmorBar = default;
 
-    [Header("Texts")] [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField] private TextMeshProUGUI hpText;
-    [SerializeField] private TextMeshProUGUI physicalArmorText;
-    [SerializeField] private TextMeshProUGUI magicalArmorText;
+    [Header("Texts")] [SerializeField] private TextMeshProUGUI nameText = default;
+    [SerializeField] private TextMeshProUGUI levelText = default;
+    [SerializeField] private TextMeshProUGUI hpText = default;
+    [SerializeField] private TextMeshProUGUI physicalArmorText = default;
+    [SerializeField] private TextMeshProUGUI magicalArmorText = default;
 
-    [Header("Points")] [SerializeField] private Image[] actionPoints;
-    [SerializeField] private Image[] sourcePoints;
+    [Header("Points")] [SerializeField] private Image[] actionPoints = default;
+    [SerializeField] private Image[] sourcePoints = default;
+
+    public bool ShowName
+    {
+        set
+        {
+            if (value == showName) return;
+            if (nameText != null)
+                nameText.gameObject.SetActive(value);
+            showName = value;
+            StatsUpdatedHandler();
+        }
+    }
+
+    public bool ShowPortrait
+    {
+        set
+        {
+            if (value == showPortrait) return;
+            if (portrait != null)
+                portrait.gameObject.SetActive(value);
+            showPortrait = value;
+            StatsUpdatedHandler();
+        }
+    }
 
     private Unit unit;
-    private StatComponents components = StatComponents.None;
+    private bool showPortrait;
+    private bool showBarImages;
+    private bool showBarTexts;
+    private bool showName;
+    private bool showLevel;
+    private bool showActionPoints;
+    private bool showSourcePoints;
+    private bool isShown;
 
     private void Awake()
     {
-        if (portrait != null) components |= StatComponents.Portrait;
-        if (hpBar != null && physicalArmorBar != null && magicalArmorBar != null) components |= StatComponents.BarImages;
-        if (hpText != null && physicalArmorText != null && magicalArmorText != null) components |= StatComponents.BarTexts;
-        if (levelText != null && nameText != null) components |= StatComponents.OtherTexts;
-        if (actionPoints != null && actionPoints.Length != 0)
-        {
-            if (actionPoints.Length != GameHandler.Instance.maxActionPoints)
-                Debug.LogError($"Should be {GameHandler.Instance.maxActionPoints.ToString()} action points on panel.", gameObject);
-            else
-                components |= StatComponents.ActionPoints;
-        }
+        showPortrait = portrait != null;
+        showBarImages = hpBar != null && physicalArmorBar != null && magicalArmorBar != null;
+        showBarTexts = hpText != null && physicalArmorText != null && magicalArmorText != null;
+        showLevel = levelText != null;
+        showName = nameText != null;
 
-        if (sourcePoints != null && sourcePoints.Length != 0) components |= StatComponents.SourcePoints;
+        showSourcePoints = sourcePoints != null && sourcePoints.Length != 0;
+        showActionPoints = actionPoints != null && actionPoints.Length != 0;
+        if (showActionPoints && actionPoints.Length != GameHandler.Instance.maxActionPoints)
+            Debug.LogError($"Should be {GameHandler.Instance.maxActionPoints.ToString()} action points on panel.",
+                gameObject);
     }
+
+    private void OnEnable()
+    {
+        isShown = true;
+        StatsUpdatedHandler();
+    }
+
+    private void OnDisable() => isShown = false;
 
     public void ShowPanel(Unit unit)
     {
@@ -72,36 +109,41 @@ public class UnitStatsPanel : UIPanel
     //                or we'll keep redrawing all UI. On the other side unit stats are not changed very often.
     private void StatsUpdatedHandler()
     {
-        if (unit == null) return;
-        if (components.HasFlag(StatComponents.BarImages))
+        if (isShown == false || unit == null) return;
+        if (showPortrait)
+            portrait.sprite = unit.UnitPortraitImage;
+        if (showBarImages)
         {
             hpBar.fillAmount = unit.HP / (float) unit.MaxHP;
             magicalArmorBar.fillAmount = unit.MagicalArmor / (float) unit.MaxMagicArmor;
             physicalArmorBar.fillAmount = unit.PhysicalArmor / (float) unit.MaxPhysicalArmor;
         }
 
-        if (components.HasFlag(StatComponents.BarTexts))
+        if (showBarTexts)
         {
             hpText.SetText($"{unit.HP}/{unit.MaxHP}");
             magicalArmorText.SetText($"{unit.MagicalArmor}/{unit.MaxMagicArmor}");
             physicalArmorText.SetText($"{unit.PhysicalArmor}/{unit.MaxPhysicalArmor}");
         }
 
-        if (components.HasFlag(StatComponents.OtherTexts))
-        {
+        if (showName)
             nameText.SetText(unit.name);
+        if (showLevel)
             levelText.SetText($"Level {unit.Level.ToString()}");
-        }
 
-        if (components.HasFlag(StatComponents.ActionPoints))
+        if (showActionPoints)
             for (var i = 0; i < actionPoints.Length; ++i)
-                actionPoints[i].color = i < unit.ActionPoints ? GameHandler.Instance.actionPointsColor : GameHandler.Instance.usedActionPointsColor;
-        if (components.HasFlag(StatComponents.SourcePoints))
+                actionPoints[i].color = i < unit.ActionPoints
+                    ? GameHandler.Instance.actionPointsColor
+                    : GameHandler.Instance.usedActionPointsColor;
+        if (showSourcePoints)
             for (var i = 0; i < sourcePoints.Length; ++i)
                 if (i < unit.MaxSourcePoints)
                 {
                     sourcePoints[i].gameObject.SetActive(true);
-                    sourcePoints[i].color = i < unit.SourcePoints ? GameHandler.Instance.sourcePointsColor : GameHandler.Instance.usedSourcePointsColor;
+                    sourcePoints[i].color = i < unit.SourcePoints
+                        ? GameHandler.Instance.sourcePointsColor
+                        : GameHandler.Instance.usedSourcePointsColor;
                 }
                 else
                     sourcePoints[i].gameObject.SetActive(false);

@@ -6,12 +6,12 @@ public class CharacterPortrait : UIPanel
 {
     public event Action<CharacterPortrait> OnPortraitCleared;
 
-    [SerializeField] private Unit unit = default;
-    [SerializeField] private Image image = default;
+    [SerializeField] private UnitStatsPanel unitStatsPanel = default;
 
     private Button button;
+    private Unit unit = default;
     private Image portraitBorder;
-    private Color selectedColor = Color.green;
+    private Color selectedColor = Color.white;
     private Color unselectedColor;
 
     private void Awake()
@@ -26,12 +26,12 @@ public class CharacterPortrait : UIPanel
     {
         gameObject.SetActive(true);
         this.unit = unit;
-        image.sprite = unit.UnitPortraitImage;
         var selection = unit.GetComponent<UnitSelection>();
         if (selection != null)
             selection.OnSelectionChanged += OnSelectedChangedHandler;
         OnSelectedChangedHandler(false);
         base.ShowPanel();
+        unitStatsPanel.ShowPanel(unit);
     }
 
     public void ClearPortrait()

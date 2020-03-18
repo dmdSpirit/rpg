@@ -2645,6 +2645,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d40ae2b81f8a2498471e90da585216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxActionPoints: 6
+  actionPointsColor: {r: 0, g: 0, b: 0, a: 0}
+  usedActionPointsColor: {r: 0, g: 0, b: 0, a: 0}
+  sourcePointsColor: {r: 0, g: 0, b: 0, a: 0}
+  usedSourcePointsColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1214914418
 GameObject:
   m_ObjectHideFlags: 0

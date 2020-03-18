@@ -1,9 +1,24 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UnitStatsPanel : UIPanel
 {
+    [Flags]
+    private enum StatComponents
+    {
+        None,
+        Portrait,
+        BarImages,
+        BarTexts,
+        OtherTexts,
+        ActionPoints,
+        SourcePoints,
+    }
+
+    [SerializeField] private Image portrait;
+
     [Header("Bars")] [SerializeField] private Image hpBar;
     [SerializeField] private Image physicalArmorBar;
     [SerializeField] private Image magicalArmorBar;
@@ -18,18 +33,29 @@ public class UnitStatsPanel : UIPanel
     [SerializeField] private Image[] sourcePoints;
 
     private Unit unit;
+    private StatComponents components = StatComponents.None;
 
     private void Awake()
     {
-        if (actionPoints != null && actionPoints.Length != 0 && actionPoints.Length != GameHandler.Instance.maxActionPoints)
-            Debug.LogError($"Should be {GameHandler.Instance.maxActionPoints.ToString()} action points on panel.", gameObject);
+        if (portrait != null) components |= StatComponents.Portrait;
+        if (hpBar != null && physicalArmorBar != null && magicalArmorBar != null) components |= StatComponents.BarImages;
+        if (hpText != null && physicalArmorText != null && magicalArmorText != null) components |= StatComponents.BarTexts;
+        if (levelText != null && nameText != null) components |= StatComponents.OtherTexts;
+        if (actionPoints != null && actionPoints.Length != 0)
+        {
+            if (actionPoints.Length != GameHandler.Instance.maxActionPoints)
+                Debug.LogError($"Should be {GameHandler.Instance.maxActionPoints.ToString()} action points on panel.", gameObject);
+            else
+                components |= StatComponents.ActionPoints;
+        }
+
+        if (sourcePoints != null && sourcePoints.Length != 0) components |= StatComponents.SourcePoints;
     }
 
     public void ShowPanel(Unit unit)
     {
         this.unit = unit;
         unit.OnStatsUpdated += StatsUpdatedHandler;
-        nameText.SetText(unit.name);
         StatsUpdatedHandler();
         base.ShowPanel();
     }
@@ -47,24 +73,30 @@ public class UnitStatsPanel : UIPanel
     private void StatsUpdatedHandler()
     {
         if (unit == null) return;
-        if (levelText != null)
-            levelText.SetText(unit.Level.ToString());
-        if (hpBar != null)
+        if (components.HasFlag(StatComponents.BarImages))
+        {
             hpBar.fillAmount = unit.HP / (float) unit.MaxHP;
-        if (magicalArmorBar != null)
             magicalArmorBar.fillAmount = unit.MagicalArmor / (float) unit.MaxMagicArmor;
-        if (physicalArmorBar != null)
             physicalArmorBar.fillAmount = unit.PhysicalArmor / (float) unit.MaxPhysicalArmor;
-        if (hpText != null)
+        }
+
+        if (components.HasFlag(StatComponents.BarTexts))
+        {
             hpText.SetText($"{unit.HP}/{unit.MaxHP}");
-        if (magicalArmorText != null)
             magicalArmorText.SetText($"{unit.MagicalArmor}/{unit.MaxMagicArmor}");
-        if (physicalArmorText != null)
             physicalArmorText.SetText($"{unit.PhysicalArmor}/{unit.MaxPhysicalArmor}");
-        if (actionPoints != null && actionPoints.Length != 0)
+        }
+
+        if (components.HasFlag(StatComponents.OtherTexts))
+        {
+            nameText.SetText(unit.name);
+            levelText.SetText($"Level {unit.Level.ToString()}");
+        }
+
+        if (components.HasFlag(StatComponents.ActionPoints))
             for (var i = 0; i < actionPoints.Length; ++i)
                 actionPoints[i].color = i < unit.ActionPoints ? GameHandler.Instance.actionPointsColor : GameHandler.Instance.usedActionPointsColor;
-        if (sourcePoints != null && sourcePoints.Length != 0)
+        if (components.HasFlag(StatComponents.SourcePoints))
             for (var i = 0; i < sourcePoints.Length; ++i)
                 if (i < unit.MaxSourcePoints)
                 {

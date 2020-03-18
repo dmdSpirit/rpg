@@ -86,7 +86,7 @@ public class Unit : MonoBehaviour
         get => actionPoints;
         set
         {
-            var points = Mathf.Clamp(value, 0, GameHandler.MaxActionPoints);
+            var points = Mathf.Clamp(value, 0, GameHandler.Instance.maxActionPoints);
             if (points == actionPoints) return;
             actionPoints = points;
             OnStatsUpdated?.Invoke();

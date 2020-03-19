@@ -36,7 +36,7 @@ public class UnitInitiativePortrait : UIPanel, IPointerEnterHandler, IPointerExi
         base.ShowPanel();
         backgroundImage.color = isFirstPortrait ? firstBorderColor : (unit.UnitMaster == UnitMaster.Player ? partyBorderColor : enemyBorderColor);
         unitStatsPanel.ShowPanel(unit);
-        unitStatsPanel.ShowName = isFirstPortrait;
+        if(isFirstPortrait)unitStatsPanel.ShowName=true;
         HideHoverBorder();
     }
 
@@ -76,6 +76,7 @@ public class UnitInitiativePortrait : UIPanel, IPointerEnterHandler, IPointerExi
             return;
         }
 
+        hoverBorder.gameObject.SetActive(true);
         hoverBorder.color = CombatController.Instance.CheckUnitIsCurrentInitiative(Unit) ? firstHoverColor : (Unit.UnitMaster == UnitMaster.Player ? partyHoverColor : enemyHoverColor);
     }
 

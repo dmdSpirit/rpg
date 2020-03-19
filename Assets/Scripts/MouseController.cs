@@ -28,7 +28,7 @@ public class MouseController : MonoSingleton<MouseController>
         if (TryGetPointedObject(out RaycastHit hit))
         {
             var unit = hit.collider.GetComponent<Unit>();
-            if (unit != null)
+            if (unit != null && unit != SelectionController.Instance.SelectedUnit)
             {
                 hoveredUnit = unit;
                 UIController.Instance.ShowHoveredUnitBarsPanel(unit);

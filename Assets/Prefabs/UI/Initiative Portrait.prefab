@@ -59,9 +59,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d1bce67ac315aa4caa5dfa6482a29ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFirstPortrait: 0
   unitStatsPanel: {fileID: 1732390475115818864}
-  highlightedColor: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
+  firstBorderColor: {r: 1, g: 1, b: 1, a: 1}
+  partyBorderColor: {r: 0.29803923, g: 0.23529413, b: 0.20784315, a: 1}
   enemyBorderColor: {r: 0.7725491, g: 0, b: 0.21176472, a: 1}
+  hoverBorder: {fileID: 6943466912249808133}
+  firstHoverColor: {r: 1, g: 1, b: 1, a: 1}
+  partyHoverColor: {r: 0.06666667, g: 0.76470596, b: 0.43137258, a: 1}
+  enemyHoverColor: {r: 0.7568628, g: 0, b: 0.20000002, a: 1}
 --- !u!114 &7072281892231644808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,17 +279,17 @@ PrefabInstance:
     - target: {fileID: 2488278894596861158, guid: bf58718f591b94242af311e44d319585,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.9433962
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2488278894596861158, guid: bf58718f591b94242af311e44d319585,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.6867199
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2488278894596861158, guid: bf58718f591b94242af311e44d319585,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.43164828
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2605291341485499895, guid: bf58718f591b94242af311e44d319585,
         type: 3}
@@ -474,7 +480,7 @@ PrefabInstance:
         type: 3}
       propertyPath: nameText
       value: 
-      objectReference: {fileID: 884238462058317950}
+      objectReference: {fileID: 0}
     - target: {fileID: 3690234803646415951, guid: bf58718f591b94242af311e44d319585,
         type: 3}
       propertyPath: levelText
@@ -983,18 +989,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51a874de2b9fb934a9baa61a35d43113, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &884238462058317950 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2844450632899093313, guid: bf58718f591b94242af311e44d319585,
-    type: 3}
-  m_PrefabInstance: {fileID: 3115636578398808895}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &170123518085945300 stripped

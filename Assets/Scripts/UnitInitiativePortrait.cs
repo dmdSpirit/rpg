@@ -9,33 +9,41 @@ public class UnitInitiativePortrait : UIPanel, IPointerEnterHandler, IPointerExi
     public event Action<UnitInitiativePortrait> OnMouseEnter;
     public event Action<UnitInitiativePortrait> OnMouseExit;
 
+    [SerializeField] private bool isFirstPortrait = false;
+
     [SerializeField] private UnitStatsPanel unitStatsPanel = default;
-    [SerializeField] private Color highlightedColor = Color.white;
+    [SerializeField] private Color firstBorderColor = Color.white;
+    [SerializeField] private Color partyBorderColor = default;
+    [SerializeField] private Color enemyBorderColor = default;
+
+    [SerializeField] private Image hoverBorder = default;
+    [SerializeField] private Color firstHoverColor = default;
+    [SerializeField] private Color partyHoverColor = default;
+    [SerializeField] private Color enemyHoverColor = default;
 
     public Unit Unit { get; private set; }
 
     private Image backgroundImage;
 
-    private Color baseColor;
-    // private bool isHighlighted;
-
     private void Awake()
     {
         backgroundImage = GetComponent<Image>();
-        baseColor = backgroundImage.color;
     }
 
     public void ShowPanel(Unit unit)
     {
         Unit = unit;
         base.ShowPanel();
+        backgroundImage.color = isFirstPortrait ? firstBorderColor : (unit.UnitMaster == UnitMaster.Player ? partyBorderColor : enemyBorderColor);
         unitStatsPanel.ShowPanel(unit);
-        unitStatsPanel.ShowName = false;
+        unitStatsPanel.ShowName = isFirstPortrait;
+        HideHoverBorder();
     }
 
     public override void HidePanel()
     {
         unitStatsPanel.HidePanel();
+        HideHoverBorder();
         base.HidePanel();
     }
 
@@ -56,17 +64,20 @@ public class UnitInitiativePortrait : UIPanel, IPointerEnterHandler, IPointerExi
         SelectionController.Instance.Select(Unit);
     }
 
-    public void HighlightPortrait()
+    public void HighlightPortrait() => ShowHoverBorder();
+
+    public void UnHighlightPortrait() => HideHoverBorder();
+
+    private void ShowHoverBorder()
     {
-        // isHighlighted = true;
-        backgroundImage.color = highlightedColor;
-        unitStatsPanel.ShowName = true;
+        if (Unit == null)
+        {
+            hoverBorder.gameObject.SetActive(false);
+            return;
+        }
+
+        hoverBorder.color = CombatController.Instance.CheckUnitIsCurrentInitiative(Unit) ? firstHoverColor : (Unit.UnitMaster == UnitMaster.Player ? partyHoverColor : enemyHoverColor);
     }
 
-    public void UnHighlightPortrait()
-    {
-        // isHighlighted = false;
-        backgroundImage.color = baseColor;
-        unitStatsPanel.ShowName = false;
-    }
+    private void HideHoverBorder() => hoverBorder.gameObject.SetActive(false);
 }

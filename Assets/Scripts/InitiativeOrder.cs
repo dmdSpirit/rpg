@@ -9,7 +9,7 @@ public class InitiativeOrder
     public List<Unit> NextTurnInitiative { get; private set; }
 
     public Unit ActiveUnit => CurrentTurnInitiative.First();
-
+    
     private int currentInitiative;
     private Dictionary<int, List<Unit>> unitsByInitiative;
     private List<int> initiatives;

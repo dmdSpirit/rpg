@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatController : MonoBehaviour
+public class CombatController : MonoSingleton<CombatController>
 {
     private Unit unitInInitiative;
     private List<Unit> unitsInCombat;
@@ -18,6 +18,8 @@ public class CombatController : MonoBehaviour
         SelectionController.Instance.OnUnitUnselect += UnitUnSelectedHandler;
         SelectionController.Instance.Select(initiativeOrder.ActiveUnit);
     }
+
+    public bool CheckUnitIsCurrentInitiative(Unit unit) => initiativeOrder.ActiveUnit == unit;
 
     private void UnitSelectedHandler(Unit unit)
     {
